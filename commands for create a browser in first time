@@ -1,0 +1,28 @@
+
+/Users/said1/Library/Application Support/Google/Chrome/Default
+
+mkdir -p "$HOME/Chrome-Automation"
+
+cp -a "$HOME/Library/Application Support/Google/Chrome/Local State" \
+"$HOME/Chrome-Automation/"
+
+cp -a "$HOME/Library/Application Support/Google/Chrome/Default" \
+"$HOME/Chrome-Automation/"
+
+
+
+"/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" \
+--remote-debugging-port=9222 \
+--user-data-dir="$HOME/Chrome-Automation" \
+--profile-directory=Default \
+--no-first-run
+
+
+you run this in terminal before running script
+
+
+"/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" \
+--remote-debugging-port=9222 \
+--user-data-dir="$HOME/Chrome-Automation" \
+--profile-directory=Default \
+--no-first-run
