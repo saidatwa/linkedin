@@ -1,6 +1,49 @@
+# Chrome Automation Setup
 
-/Users/said1/Library/Application Support/Google/Chrome/Default
+This guide explains how to configure Chrome Remote Debugging for Playwright on Windows and macOS.
 
+---
+
+# Windows Setup
+
+### 1. Create Chrome Automation profile
+
+Run PowerShell:
+
+```powershell
+$ChromePath = "$env:LOCALAPPDATA\Google\Chrome\User Data"
+$AutomationPath = "$env:USERPROFILE\Chrome-Automation"
+
+New-Item -ItemType Directory -Force -Path $AutomationPath
+
+Copy-Item "$ChromePath\Local State" "$AutomationPath\"
+
+Copy-Item "$ChromePath\Default" "$AutomationPath\Default" -Recurse
+```
+
+### 2. Start Chrome with Remote Debugging
+
+Run this command in PowerShell before running your Python script:
+
+```powershell
+& "C:\Program Files\Google\Chrome\Application\chrome.exe" `
+--remote-debugging-port=9222 `
+--user-data-dir="$env:USERPROFILE\Chrome-Automation" `
+--profile-directory=Default `
+--no-first-run
+```
+
+If Chrome is installed in another location, update the executable path.
+
+---
+
+# macOS Setup
+
+### 1. Create Chrome Automation profile
+
+Run Terminal:
+
+```bash
 mkdir -p "$HOME/Chrome-Automation"
 
 cp -a "$HOME/Library/Application Support/Google/Chrome/Local State" \
@@ -8,21 +51,50 @@ cp -a "$HOME/Library/Application Support/Google/Chrome/Local State" \
 
 cp -a "$HOME/Library/Application Support/Google/Chrome/Default" \
 "$HOME/Chrome-Automation/"
+```
 
+### 2. Start Chrome with Remote Debugging
 
+Run this command in Terminal before running your Python script:
 
+```bash
 "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" \
 --remote-debugging-port=9222 \
 --user-data-dir="$HOME/Chrome-Automation" \
 --profile-directory=Default \
 --no-first-run
+```
 
+---
 
-you run this in terminal before running script
+# Python Playwright Connection
 
+After launching Chrome using the commands above, connect your Python script:
 
-"/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" \
---remote-debugging-port=9222 \
---user-data-dir="$HOME/Chrome-Automation" \
---profile-directory=Default \
---no-first-run
+```python
+from playwright.sync_api import sync_playwright
+
+with sync_playwright() as playwright:
+
+    browser = playwright.chromium.connect_over_cdp(
+        "http://127.0.0.1:9222"
+    )
+
+    context = browser.contexts[0]
+
+    page = context.pages[0] if context.pages else context.new_page()
+
+    page.goto("https://www.google.com")
+
+    input("Press Enter to exit...")
+```
+
+---
+
+# Important Notes
+
+- Close normal Chrome before copying the existing profile.
+- Chrome must be running with remote debugging before starting the Python script.
+- The automation profile is a separate copy of your original Chrome profile.
+- Do not run two Chrome instances using the same automation profile simultaneously.
+- Keep port `9222` accessible only locally. Do not expose remote debugging to the internet.
