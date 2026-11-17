@@ -12,8 +12,6 @@ Exact name matching: extracts the name from the Invite button's aria-label (with
 
 Connection invitations: with or without a custom note, with automatic fallback to "Send without a note" if the note send fails.
 
-Full Arabic support: URL-encodes Arabic names and normalizes Arabic characters for matching.
-
 Verbose logging: prints every step (extracted name, skip reason, send success/failure) for easy tracing and debugging.
 
 Safety: runs on a dedicated Chrome profile (Chrome-Automation) and leaves the browser open after finishing.
