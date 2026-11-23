@@ -15,7 +15,7 @@ config.ini
 credentials.json
 
 # Ignore a specific file
-linkedin.py.py
+linkedin.py
 
 # Ignore all log files
 *.log

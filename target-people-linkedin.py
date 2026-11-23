@@ -5,7 +5,7 @@ import requests
 from time import sleep
 from urllib.parse import quote
 from colorama import Fore
-from patchright.sync_api import sync_playwright
+from playwright.sync_api import sync_playwright
 
 green = Fore.GREEN
 blue = Fore.BLUE
