@@ -1,5 +1,5 @@
 # linkedin
-Private for Cortys
+
 LinkedIn Auto-Connect Bot — an advanced LinkedIn automation tool built with Python and Playwright, connecting to an already-running Chrome instance via CDP (no fresh login required).
 
 Key Features:
