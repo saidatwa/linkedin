@@ -11,8 +11,6 @@ green = Fore.GREEN
 blue = Fore.BLUE
 red = Fore.RED
 
-# Created By Said Atwa
-# https://www.linkedin.com/in/saidatwa/
 
 # new version link ai mode so make it send msg to users for get more clients
 # set connection limit to 100 per day and make it dynamic
